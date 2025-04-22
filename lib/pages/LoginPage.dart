@@ -2,8 +2,8 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:weatherapp1/weather_home.dart'; 
-import 'signuppage.dart'; 
+import 'package:weatherapp1/weather_home.dart';
+import 'signuppage.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -15,19 +15,18 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
   final TextEditingController _passwordController = TextEditingController();
 
   bool _isLoginFailed = false;
-  bool _isDarkMode = false;
+  bool? _isDarkMode; // Updated to nullable
 
- 
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
 
   @override
   void initState() {
     super.initState();
-    // Initialize- animation 
+    // Initialize animation
     _animationController = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 1),
+      duration: Duration(seconds: 3),
     );
     _fadeAnimation = CurvedAnimation(
       parent: _animationController,
@@ -46,6 +45,10 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
 
   @override
   Widget build(BuildContext context) {
+    // Check system theme for dark mode
+    bool systemDarkMode = MediaQuery.of(context).platformBrightness == Brightness.dark;
+    bool isDarkMode = _isDarkMode ?? systemDarkMode; // If _isDarkMode is null, fall back to system theme
+
     final screenSize = MediaQuery.of(context).size;
     final isLandscape = screenSize.width > screenSize.height;
 
@@ -55,7 +58,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: _isDarkMode
+            colors: isDarkMode
                 ? [Colors.grey.shade900, Colors.black]
                 : [Colors.blue.shade600, Colors.blue.shade900],
           ),
@@ -114,11 +117,11 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
           child: FloatingActionButton(
             onPressed: () {
               setState(() {
-                _isDarkMode = !_isDarkMode;
+                _isDarkMode = !isDarkMode;
               });
             },
-            backgroundColor: _isDarkMode ? Colors.grey : Colors.blue,
-            child: Icon(_isDarkMode ? Icons.dark_mode : Icons.light_mode),
+            backgroundColor: isDarkMode ? Colors.grey : Colors.blue,
+            child: Icon(isDarkMode ? Icons.dark_mode : Icons.light_mode),
           ),
         ),
       ),
@@ -127,9 +130,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
 
   Widget _buildHeader() {
     return Column(
-      
       children: [
-       
         Image.asset('assets/animation.gif', 
           height: 100, 
           width: 1000,
@@ -193,10 +194,10 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
           context,
           MaterialPageRoute(
             builder: (context) => SignUpPage(
-              isDarkMode: _isDarkMode, // sending-  the current dark mode status
+              isDarkMode: _isDarkMode ?? MediaQuery.of(context).platformBrightness == Brightness.dark,
               onDarkModeToggle: (value) {
                 setState(() {
-                  _isDarkMode = value; 
+                  _isDarkMode = value;
                 });
               },
             ),
@@ -216,10 +217,10 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
         context,
         MaterialPageRoute(
           builder: (context) => WeatherHome(
-            isDarkMode: _isDarkMode, 
+            isDarkMode: _isDarkMode ?? MediaQuery.of(context).platformBrightness == Brightness.dark,
             onDarkModeToggle: (value) {
               setState(() {
-                _isDarkMode = value; 
+                _isDarkMode = value;
               });
             },
           ),
