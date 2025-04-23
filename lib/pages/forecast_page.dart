@@ -8,15 +8,31 @@ class ForecastPage extends StatelessWidget {
   final bool isDarkMode;
 
   final List<Forecast> todayForecast = [
-    Forecast(time: '16:30', temperature: 12, icon: Icons.wb_sunny),
-    Forecast(time: '19:30', temperature: 13, icon: Icons.wb_sunny),
+  Forecast(time: '06:00', temperature: 10, icon: Icons.cloud),
+  Forecast(time: '09:00', temperature: 14, icon: Icons.wb_cloudy),
+  Forecast(time: '12:00', temperature: 18, icon: Icons.wb_sunny),
+  Forecast(time: '15:00', temperature: 20, icon: Icons.wb_sunny),
+  Forecast(time: '18:00', temperature: 17, icon: Icons.cloud),
+  Forecast(time: '21:00', temperature: 14, icon: Icons.nightlight_round),
   ];
 
-  final List<Forecast> nextForecast = [
-    Forecast(day: 'Saturday', temperature: 24, icon: Icons.wb_sunny, date: '2024-06-01'),
-    Forecast(day: 'Sunday', temperature: 25, icon: Icons.cloud, date: '2024-06-02'),
-    Forecast(day: 'Monday', temperature: 21, icon: Icons.cloud, date: '2024-06-03'),
-  ];
+final List<Forecast> nextForecast = [
+  Forecast(day: 'Wednesday', temperature: 22, icon: Icons.cloud, date: '2025-05-01'),
+  Forecast(day: 'Thursday', temperature: 24, icon: Icons.wb_sunny, date: '2025-05-02'),
+  Forecast(day: 'Friday', temperature: 23, icon: Icons.wb_sunny, date: '2025-05-03'),
+  Forecast(day: 'Saturday', temperature: 21, icon: Icons.cloud, date: '2025-05-04'),
+  Forecast(day: 'Sunday', temperature: 19, icon: Icons.beach_access, date: '2025-05-05'),
+  Forecast(day: 'Monday', temperature: 20, icon: Icons.cloud_queue, date: '2025-05-06'),
+  Forecast(day: 'Tuesday', temperature: 22, icon: Icons.wb_cloudy, date: '2025-05-07'),
+  Forecast(day: 'Wednesday', temperature: 25, icon: Icons.wb_sunny, date: '2025-05-08'),
+  Forecast(day: 'Thursday', temperature: 26, icon: Icons.wb_sunny, date: '2025-05-09'),
+  Forecast(day: 'Friday', temperature: 24, icon: Icons.wb_sunny, date: '2025-05-10'),
+  Forecast(day: 'Saturday', temperature: 22, icon: Icons.cloud, date: '2025-05-11'),
+  Forecast(day: 'Sunday', temperature: 20, icon: Icons.nights_stay, date: '2025-05-12'),
+  Forecast(day: 'Monday', temperature: 21, icon: Icons.wb_cloudy, date: '2025-05-13'),
+  Forecast(day: 'Tuesday', temperature: 23, icon: Icons.wb_sunny, date: '2025-05-14'),
+];
+
 
   ForecastPage({required this.isDarkMode});
 
@@ -50,7 +66,7 @@ class ForecastPage extends StatelessWidget {
                   style: TextStyle(fontSize: 20, color: Colors.white60),
                 ),
                 Text(
-                  'June 1, 2024',
+                  'April 30, 2025',
                   style: TextStyle(fontSize: 14, color: Colors.white60),
                 ),
               ],
