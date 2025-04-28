@@ -18,7 +18,7 @@ class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _confirmPasswordController = TextEditingController();
 
   String _temperatureUnit = 'Celsius'; // default is celsius
-  bool _agreedToTerms = false; // Default state for terms checkbox
+  bool _agreedToTerms = false; // unpick for terms checkbox
 
   @override
   Widget build(BuildContext context) {
