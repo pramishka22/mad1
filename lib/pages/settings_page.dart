@@ -20,7 +20,7 @@ class _SettingsPageState extends State<SettingsPage> {
     temperatureUnit: 'Celsius',
   );
 
-  String _username = "Kavinkumar Naidu"; 
+  String _username = "Pramishka Kannangara"; 
 
   @override
   Widget build(BuildContext context) {
