@@ -4,13 +4,12 @@
 import 'package:flutter/material.dart';
 import 'package:weatherapp1/pages/LoginPage.dart';
 import '../models/settings_model.dart';
-import 'about_us_page.dart'; 
+import 'about_us_page.dart';
 
 class SettingsPage extends StatefulWidget {
   final bool isDarkMode; 
   final Function(bool) onDarkModeToggle; 
 
- 
   SettingsPage({required this.isDarkMode, required this.onDarkModeToggle});
 
   @override
@@ -23,6 +22,8 @@ class _SettingsPageState extends State<SettingsPage> {
     notificationsEnabled: true,
     temperatureUnit: 'Celsius',
   );
+
+  String _username = "Kavinkumar Naidu"; 
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +67,21 @@ class _SettingsPageState extends State<SettingsPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // Profile Section
+               ListTile(
+                  leading: CircleAvatar(
+                    radius: 30,
+                    backgroundImage: AssetImage('assets/profilepic.jpeg'),
+                  ),
+                  title: Text(
+                    _username,
+                    style: TextStyle(color: Colors.white, fontSize: 18),
+                  ),
+                  subtitle: Text(
+                    'View and edit your profile',
+                    style: TextStyle(color: Colors.white70),
+                  ),
+                ),
                 Divider(color: Colors.white60),
 
                 // Notification- Toggle
@@ -122,7 +138,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   title: Text('About Us', style: TextStyle(color: Colors.white, fontSize: 18)),
                   leading: Icon(Icons.info, color: Colors.white),
                   onTap: () {
-                    // Navigate- to the About Us Page
+                    // Navigate to the About Us Page
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -133,7 +149,6 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
                 Divider(color: Colors.white60),
 
-                
                 if (orientation == Orientation.landscape) SizedBox(height: 114),
               ],
             ),
