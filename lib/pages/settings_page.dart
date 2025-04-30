@@ -1,6 +1,4 @@
 
-
-
 import 'package:flutter/material.dart';
 import 'package:weatherapp1/pages/LoginPage.dart';
 import '../models/settings_model.dart';
