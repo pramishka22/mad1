@@ -69,6 +69,7 @@ flutter:
       - assets/animation.gif
       - assets/cloud.gif
       - assets/rain.gif
+      - assets/profilepic.jpeg
 
   fonts:
     - family: Montserrat
