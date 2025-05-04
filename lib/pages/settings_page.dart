@@ -4,8 +4,8 @@ import '../models/settings_model.dart';
 import 'about_us_page.dart';
 
 class SettingsPage extends StatefulWidget {
-  final bool isDarkMode; 
-  final Function(bool) onDarkModeToggle; 
+  final bool isDarkMode;
+  final Function(bool) onDarkModeToggle;
 
   SettingsPage({required this.isDarkMode, required this.onDarkModeToggle});
 
@@ -20,7 +20,7 @@ class _SettingsPageState extends State<SettingsPage> {
     temperatureUnit: 'Celsius',
   );
 
-  String _username = "Pramishka Kannangara"; 
+  String _username = "Pramishka Kannangara";
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +35,6 @@ class _SettingsPageState extends State<SettingsPage> {
           IconButton(
             icon: Icon(Icons.logout),
             onPressed: () {
-              // Navigate back to the login page
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(builder: (context) => LoginPage()),
@@ -47,9 +46,7 @@ class _SettingsPageState extends State<SettingsPage> {
       ),
       body: SingleChildScrollView(
         child: ConstrainedBox(
-          constraints: BoxConstraints(
-            minHeight: screenHeight, 
-          ),
+          constraints: BoxConstraints(minHeight: screenHeight),
           child: Container(
             padding: const EdgeInsets.all(16.0),
             decoration: BoxDecoration(
@@ -61,97 +58,121 @@ class _SettingsPageState extends State<SettingsPage> {
                     : [Colors.blue.shade500, Colors.blue.shade900],
               ),
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Profile Section
-               ListTile(
-                  leading: CircleAvatar(
-                    radius: 30,
-                    backgroundImage: AssetImage('assets/profilepic.jpeg'),
-                  ),
-                  title: Text(
-                    _username,
-                    style: TextStyle(color: Colors.white, fontSize: 18),
-                  ),
-                  subtitle: Text(
-                    'View and edit your profile',
-                    style: TextStyle(color: Colors.white70),
-                  ),
-                ),
-                Divider(color: Colors.white60),
-
-                // Notification- Toggle
-                SwitchListTile(
-                  activeColor: Colors.white,
-                  title: Text(
-                    'Enable Notifications',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  value: settings.notificationsEnabled,
-                  onChanged: (bool value) {
-                    setState(() {
-                      settings.notificationsEnabled = value;
-                    });
-                  },
-                ),
-                Divider(color: Colors.white60),
-
-                // Temperature Unit -Selection
-                Text(
-                  'Temperature Unit',
-                  style: TextStyle(color: Colors.white, fontSize: 18),
-                ),
-                ListTile(
-                  title: const Text('Celsius', style: TextStyle(color: Colors.white)),
-                  leading: Radio<String>(
-                    value: 'Celsius',
-                    groupValue: settings.temperatureUnit,
-                    onChanged: (String? value) {
-                      setState(() {
-                        settings.temperatureUnit = value!;
-                      });
-                    },
-                    activeColor: Colors.white,
-                  ),
-                ),
-                ListTile(
-                  title: const Text('Fahrenheit', style: TextStyle(color: Colors.white)),
-                  leading: Radio<String>(
-                    value: 'Fahrenheit',
-                    groupValue: settings.temperatureUnit,
-                    onChanged: (String? value) {
-                      setState(() {
-                        settings.temperatureUnit = value!;
-                      });
-                    },
-                    activeColor: Colors.white,
-                  ),
-                ),
-                Divider(color: Colors.white60),
-
-                // "About Us" Button
-                ListTile(
-                  title: Text('About Us', style: TextStyle(color: Colors.white, fontSize: 18)),
-                  leading: Icon(Icons.info, color: Colors.white),
-                  onTap: () {
-                    // Navigate to the About Us Page
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => AboutUsPage(isDarkMode: widget.isDarkMode), // Pass isDarkMode
+            child: orientation == Orientation.portrait
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: _buildSettingsWidgets(),
+                  )
+                : Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: _buildSettingsWidgets().sublist(
+                              0, (_buildSettingsWidgets().length / 2).ceil()),
+                        ),
                       ),
-                    );
-                  },
-                ),
-                Divider(color: Colors.white60),
-
-                if (orientation == Orientation.landscape) SizedBox(height: 114),
-              ],
-            ),
+                      SizedBox(width: 16),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: _buildSettingsWidgets().sublist(
+                              (_buildSettingsWidgets().length / 2).ceil()),
+                        ),
+                      ),
+                    ],
+                  ),
           ),
         ),
       ),
     );
+  }
+
+  List<Widget> _buildSettingsWidgets() {
+    return [
+      // Profile Section
+      ListTile(
+        leading: CircleAvatar(
+          radius: 30,
+          backgroundImage: AssetImage('assets/profilepic.jpeg'),
+        ),
+        title: Text(
+          _username,
+          style: TextStyle(color: Colors.white, fontSize: 18),
+        ),
+        subtitle: Text(
+          'View and edit your profile',
+          style: TextStyle(color: Colors.white70),
+        ),
+      ),
+      Divider(color: Colors.white60),
+
+      // Notification Toggle
+      SwitchListTile(
+        activeColor: Colors.white,
+        title: Text(
+          'Enable Notifications',
+          style: TextStyle(color: Colors.white),
+        ),
+        value: settings.notificationsEnabled,
+        onChanged: (bool value) {
+          setState(() {
+            settings.notificationsEnabled = value;
+          });
+        },
+      ),
+      Divider(color: Colors.white60),
+
+      // Temperature Unit Selection
+      Text(
+        'Temperature Unit',
+        style: TextStyle(color: Colors.white, fontSize: 18),
+      ),
+      ListTile(
+        title: const Text('Celsius', style: TextStyle(color: Colors.white)),
+        leading: Radio<String>(
+          value: 'Celsius',
+          groupValue: settings.temperatureUnit,
+          onChanged: (String? value) {
+            setState(() {
+              settings.temperatureUnit = value!;
+            });
+          },
+          activeColor: Colors.white,
+        ),
+      ),
+      ListTile(
+        title: const Text('Fahrenheit', style: TextStyle(color: Colors.white)),
+        leading: Radio<String>(
+          value: 'Fahrenheit',
+          groupValue: settings.temperatureUnit,
+          onChanged: (String? value) {
+            setState(() {
+              settings.temperatureUnit = value!;
+            });
+          },
+          activeColor: Colors.white,
+        ),
+      ),
+      Divider(color: Colors.white60),
+
+      // About Us
+      ListTile(
+        title:
+            Text('About Us', style: TextStyle(color: Colors.white, fontSize: 18)),
+        leading: Icon(Icons.info, color: Colors.white),
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  AboutUsPage(isDarkMode: widget.isDarkMode),
+            ),
+          );
+        },
+      ),
+      Divider(color: Colors.white60),
+    ];
   }
 }
